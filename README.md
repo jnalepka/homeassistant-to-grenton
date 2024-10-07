@@ -2,6 +2,11 @@
 
 Run services and read entities from Home Assistant in the Grenton system.
 
+If you like what I do, buy me a `coffee`!
+
+[![](https://img.shields.io/static/v1?label=Donate&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86)](https://tipply.pl/@jnalepka)
+
+
 ## Home Assistant Long-lived access token
 
 In Home Assistant go to the Profile->Security->Long-lived access tokens, and create the long-lived access token. Token will be valid for 10 years from creation.
@@ -180,9 +185,23 @@ In Home Assistant go to the Profile->Security->Long-lived access tokens, and cre
    ![image](https://github.com/user-attachments/assets/948074ff-c0ac-4ecd-bdfa-75c5f8e74b5c)
 
 
+## Simple Home Assistant services
 
-
-
-   
+| ha_entity    | ha_method  | description |
+|-------------|-------------|-------------|
+| light.your_lamp | turn_on | Turn on one or more lights. |
+| light.your_lamp | turn_off | Turn off one or more lights. |
+| light.your_lamp | toggle | Toggles one or more lights, from on to off, or, off to on, based on their current state. |
+| cover.your_blinds | open_cover | Opens a cover. |
+| cover.your_blinds | close_cover | Closes a cover. |
+| script.your_script | turn_on | Runs the sequence of actions defined in a script. |
+| script.your_script | turn_off | Stops a running script. |
+| script.your_script | toggle | Toggle a script. Starts it, if isn't running, stops it otherwise. |
+| switch.your_switch | turn_on | Turns a switch on. |
+| switch.your_switch | turn_off | Turns a switch off. |
+| switch.your_switch | toggle | Toggles a switch on/off. |
+| climate.your_thermostat | turn_on | Turns climate device on. |
+| climate.your_thermostat | turn_off | Turns climate device off. |
+| climate.your_thermostat | toggle | Toggles climate device, from on to off, or off to on. |
 
 
