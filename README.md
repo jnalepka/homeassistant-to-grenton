@@ -71,19 +71,26 @@ In Home Assistant go to the Profile->Security->Long-lived access tokens, and cre
     	
     	    if entity_id == "light.tv_light" then
     	    	if respJson[i].state == "on" then
-    	    		GATE_HTTP->HA_tv_light_value = 1
+    	    		GATE_HTTP->HA_tv_light_value = 1 -- User feature on the GATE_HTTP. Save the lamp value, i.e. to show it in the myGrenton.
     	    	else
     	    		GATE_HTTP->HA_tv_light_value = 0
     	    	end
-    	    	
-    	    	-- example of getting an attributes
+    	    end
+
+          if entity_id == "light.night_lamp" then
+    	    	if respJson[i].state == "on" then
+    	    		GATE_HTTP->HA_night_lamp_value = 1
+    	    	else
+    	    		GATE_HTTP->HA_night_lamp_value = 0
+    	    	end
+             -- example of getting an attributes
     			local FriendlyName = respJson[i].attributes.friendly_name
     			local ColorMode = respJson[i].attributes.color_mode
     	    end
     	    
+    		-- END OF EXAMPLE
     	    
-    	    
-    	    -- TO DO
+    		-- TO DO. Create your own conditions based on the example.
     	    
     	end
     end
