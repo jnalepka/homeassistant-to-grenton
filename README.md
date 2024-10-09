@@ -1,4 +1,4 @@
-<img src="https://github.com/user-attachments/assets/662a0a84-06b1-41c8-b944-f6bea44608cb" alt="Group 1" width="200" />
+<img src="https://github.com/user-attachments/assets/e7eca05d-1027-4f53-a246-2d4ca1f5f9fb" alt="Group 1" width="200" />
 
 
 # ![Home Assistant to Grenton](https://github.com/user-attachments/assets/ae8d7f98-ce7e-423a-905a-b3b4566495cf)
