@@ -183,7 +183,7 @@ In Home Assistant go to the Profile->Security->Long-lived access tokens, and cre
 
    ![image](https://github.com/user-attachments/assets/bb1b97ed-0c33-4530-8390-06ff0992ad0d)
 
-   This operation will update all states from HomeASsistant after the action.
+   This operation will update all states from HomeAssistant after the action.
 
 5. Now you can call the `HA_Integration_Set` script from everywhere in the Grenton System!
 
@@ -192,31 +192,31 @@ In Home Assistant go to the Profile->Security->Long-lived access tokens, and cre
 
 ## Simple Home Assistant services
 
-| ha_entity    | ha_method  | description |
-|-------------|-------------|-------------|
-| light.your_lamp | turn_on | Turn on one or more lights. |
-| light.your_lamp | turn_off | Turn off one or more lights. |
-| light.your_lamp | toggle | Toggles one or more lights, from on to off, or, off to on, based on their current state. |
-| cover.your_blinds | open_cover | Opens blinds. |
-| cover.your_blinds | close_cover | Closes blinds. |
-| cover.your_blinds | stop_cover | Stops the cover movement. |
-| cover.your_blinds | toggle | Toggles a cover open/closed. |
-| cover.your_blinds | open_cover_tilt | Tilts a cover open. |
-| cover.your_blinds | close_cover_tilt | Tilts a cover to close. |
-| cover.your_blinds | stop_cover_tilt | Stops a tilting cover movement. |
-| script.your_script | turn_on | Runs the sequence of actions defined in a script. |
-| script.your_script | turn_off | Stops a running script. |
-| script.your_script | toggle | Toggle a script. Starts it, if isn't running, stops it otherwise. |
-| switch.your_switch | turn_on | Turns a switch on. |
-| switch.your_switch | turn_off | Turns a switch off. |
-| switch.your_switch | toggle | Toggles a switch on/off. |
-| climate.your_thermostat | turn_on | Turns climate device on. |
-| climate.your_thermostat | turn_off | Turns climate device off. |
-| climate.your_thermostat | toggle | Toggles climate device, from on to off, or off to on. |
+   | ha_entity    | ha_method  | description |
+   |-------------|-------------|-------------|
+   | light.your_lamp | turn_on | Turn on one or more lights. |
+   | light.your_lamp | turn_off | Turn off one or more lights. |
+   | light.your_lamp | toggle | Toggles one or more lights, from on to off, or, off to on, based on their current state. |
+   | cover.your_blinds | open_cover | Opens blinds. |
+   | cover.your_blinds | close_cover | Closes blinds. |
+   | cover.your_blinds | stop_cover | Stops the cover movement. |
+   | cover.your_blinds | toggle | Toggles a cover open/closed. |
+   | cover.your_blinds | open_cover_tilt | Tilts a cover open. |
+   | cover.your_blinds | close_cover_tilt | Tilts a cover to close. |
+   | cover.your_blinds | stop_cover_tilt | Stops a tilting cover movement. |
+   | script.your_script | turn_on | Runs the sequence of actions defined in a script. |
+   | script.your_script | turn_off | Stops a running script. |
+   | script.your_script | toggle | Toggle a script. Starts it, if isn't running, stops it otherwise. |
+   | switch.your_switch | turn_on | Turns a switch on. |
+   | switch.your_switch | turn_off | Turns a switch off. |
+   | switch.your_switch | toggle | Toggles a switch on/off. |
+   | climate.your_thermostat | turn_on | Turns climate device on. |
+   | climate.your_thermostat | turn_off | Turns climate device off. |
+   | climate.your_thermostat | toggle | Toggles climate device, from on to off, or off to on. |
 
 # (Optional) Run the Home Assistant service with attributes
 
-1. On the Gate HTTP, create a script, named `HA_Integration_Advanced_Set`:
+   1. On the Gate HTTP, create a script, named `HA_Integration_Advanced_Set`:
 
     ```lua
       -- ╔═══════════════════════════════════════════════════════════════════════════════╗
@@ -295,9 +295,9 @@ In Home Assistant go to the Profile->Security->Long-lived access tokens, and cre
 
 ## Advanced Home Assistant services
 
-| ha_entity    | ha_method  | attr_brightness | attr_hs_color | attr_position | attr_tilt_position | description |
-|-------------|-------------|-------------|-------------|-------------|-------------|-------------|
-| light.your_lamp | turn_on | [0-255] | default | default | default | Turn on one or more lights and set brightness. |
-| light.your_lamp | turn_on | [0-255] | "[300,70]" | default | default | Turn on one or more lights and set brightness, hue and saturation. |
-| cover.your_blinds | set_cover_position | default | default | [0-100] | default | Moves a cover to a specific position. |
-| cover.your_blinds | set_cover_tilt_position | default | default | default | [0-100] | Moves a cover tilt to a specific position. |
+   | ha_entity    | ha_method  | attr_brightness | attr_hs_color | attr_position | attr_tilt_position | description |
+   |-------------|-------------|-------------|-------------|-------------|-------------|-------------|
+   | light.your_lamp | turn_on | [0-255] | default | default | default | Turn on one or more lights and set brightness. |
+   | light.your_lamp | turn_on | [0-255] | "[300,70]" | default | default | Turn on one or more lights and set brightness, hue and saturation. |
+   | cover.your_blinds | set_cover_position | default | default | [0-100] | default | Moves a cover to a specific position. |
+   | cover.your_blinds | set_cover_tilt_position | default | default | default | [0-100] | Moves a cover tilt to a specific position. |
