@@ -218,7 +218,7 @@ In Home Assistant go to the Profile->Security->Long-lived access tokens, and cre
 
    1. On the Gate HTTP, create a script, named `HA_Integration_Advanced_Set`:
 
-    ```lua
+   ```lua
       -- ╔═══════════════════════════════════════════════════════════════════════════════╗
       -- ║                        Author: Jan Nalepka                                    ║
       -- ║                                                                               ║
@@ -277,7 +277,7 @@ In Home Assistant go to the Profile->Security->Long-lived access tokens, and cre
       GATE_HTTP->HA_Request_Set->SetRequestBody(reqJson)
       GATE_HTTP->HA_Request_Set->SendRequest()
 
-    ```
+   ```
 
     > Note: If you use a different name for the Gate HTTP or the virtual object, modify it in the script.
 
