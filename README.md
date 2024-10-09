@@ -16,7 +16,7 @@ If you like what I do, buy me a `coffee`!
 
 In Home Assistant go to the Profile->Security->Long-lived access tokens, and create the long-lived access token. Token will be valid for 10 years from creation.
 
-## Read entities from Home Assistant
+# Read entities from Home Assistant
 
 1. On the Gate HTTP, create an `HttpRequest` virtual object:
 
@@ -113,7 +113,7 @@ In Home Assistant go to the Profile->Security->Long-lived access tokens, and cre
 
    ![image](https://github.com/user-attachments/assets/f847371c-3bf0-4225-a3cc-abdf6be467b1)
 
-## Run the Home Assistant service
+# Run the Home Assistant service
 
 1. On the Gate HTTP, create an `HttpRequest` virtual object:
 
@@ -197,8 +197,13 @@ In Home Assistant go to the Profile->Security->Long-lived access tokens, and cre
 | light.your_lamp | turn_on | Turn on one or more lights. |
 | light.your_lamp | turn_off | Turn off one or more lights. |
 | light.your_lamp | toggle | Toggles one or more lights, from on to off, or, off to on, based on their current state. |
-| cover.your_blinds | open_cover | Opens a cover. |
-| cover.your_blinds | close_cover | Closes a cover. |
+| cover.your_blinds | open_cover | Opens blinds. |
+| cover.your_blinds | close_cover | Closes blinds. |
+| cover.your_blinds | stop_cover | Stops the cover movement. |
+| cover.your_blinds | toggle | Toggles a cover open/closed. |
+| cover.your_blinds | open_cover_tilt | Tilts a cover open. |
+| cover.your_blinds | close_cover_tilt | Tilts a cover to close. |
+| cover.your_blinds | stop_cover_tilt | Stops a tilting cover movement. |
 | script.your_script | turn_on | Runs the sequence of actions defined in a script. |
 | script.your_script | turn_off | Stops a running script. |
 | script.your_script | toggle | Toggle a script. Starts it, if isn't running, stops it otherwise. |
@@ -209,4 +214,90 @@ In Home Assistant go to the Profile->Security->Long-lived access tokens, and cre
 | climate.your_thermostat | turn_off | Turns climate device off. |
 | climate.your_thermostat | toggle | Toggles climate device, from on to off, or off to on. |
 
+# (Optional) Run the Home Assistant service with attributes
 
+1. On the Gate HTTP, create a script, named `HA_Integration_Advanced_Set`:
+
+    ```lua
+      -- ╔═══════════════════════════════════════════════════════════════════════════════╗
+      -- ║                        Author: Jan Nalepka                                    ║
+      -- ║                                                                               ║
+      -- ║ Script: HA_Integration_Advanced_Set                                           ║
+      -- ║ Description: Send a service command for an entity in Home Assistant.          ║
+      -- ║                                                                               ║
+      -- ║ License: MIT License                                                          ║
+      -- ║ Github: https://github.com/jnalepka/homeassistant-to-grenton                  ║
+      -- ║                                                                               ║
+      -- ║ Version: 1.0.0                                                                ║
+      -- ║                                                                               ║
+      -- ║ Requirements:                                                                 ║
+      -- ║    Gate Http:                                                                 ║
+      -- ║          1.  Gate Http NAME: "GATE_HTTP" <or change it in this script>        ║
+      -- ║                                                                               ║
+      -- ║    Script parameters:                                                         ║
+      -- ║          1.  ha_entity, default: "light.my_lamp", string                      ║
+      -- ║          2.  ha_method, default: "toggle", string                             ║
+      -- ║          3.  attr_brightness, default: -1, number [0-255]                     ║
+      -- ║          4.  attr_hs_color, default: "-", string "[hue, sat]", "[300, 70]"    ║
+      -- ║          5.  attr_position, default: -1, number [0-100]                       ║
+      -- ║          6.  attr_tilt_position, default: -1, number [0-100]                  ║
+      -- ║                                                                               ║
+      -- ║    Http_Request virtual object:                                               ║
+      -- ║          Name: HA_Request_Set                                                 ║
+      -- ║          Host: http://192.168.0.114:8123  (example)                           ║
+      -- ║          Path: /api/state (any value)                                         ║
+      -- ║          Method: "POST"                                                       ║
+      -- ║          RequestType: JSON                                                    ║
+      -- ║          ResponseType: JSON                                                   ║
+      -- ║          RequestHeaders: Authorization: Bearer <your HA token>                ║
+      -- ║                                                                               ║
+      -- ╚═══════════════════════════════════════════════════════════════════════════════╝
+      
+      local ha_service, ha_entity_name = string.match(ha_entity, "([^%.]+)%.([^%.]+)")
+      local path = "/api/services/"..ha_service.."/"..ha_method
+      local reqJson = { entity_id = ha_entity }
+      
+      if attr_brightness ~= -1 then 
+      	reqJson.brightness = attr_brightness 
+      end
+      
+      if attr_hs_color ~= "-" then 
+      	reqJson.hs_color = attr_hs_color
+      end
+      
+      if attr_position ~= -1 then 
+      	reqJson.position = attr_position
+      end
+      
+      if attr_tilt_position ~= -1 then 
+      	reqJson.tilt_position = attr_tilt_position
+      end
+      
+      GATE_HTTP->HA_Request_Set->SetPath(path)
+      GATE_HTTP->HA_Request_Set->SetRequestBody(reqJson)
+      GATE_HTTP->HA_Request_Set->SendRequest()
+
+    ```
+
+    > Note: If you use a different name for the Gate HTTP or the virtual object, modify it in the script.
+
+2. Add the script parameters to the `HA_Integration_Advanced_Set` script:
+
+   ![image](https://github.com/user-attachments/assets/1f40f61a-64b5-4973-be77-098fc6bbd62a)
+
+   * `Name`: ha_entity `Type`: string
+   * `Name`: ha_method `Type`: string
+   * `Name`: attr_brightness `Type`: number `Default`: -1  (range: 0-255)
+   * `Name`: attr_hs_color `Type`: string `Default`: "-"  (example: "[300,70]", where 300 - hue in range 0-360, 70 is saturation in range 0-100)
+   * `Name`: attr_position `Type`: number `Default`: -1  (range: 0-100)
+   * `Name`: attr_tilt_position `Type`: number `Default`: -1  (range: 0-100)
+  
+
+## Advanced Home Assistant services
+
+| ha_entity    | ha_method  | attr_brightness | attr_hs_color | attr_position | attr_tilt_position | description |
+|-------------|-------------|-------------|-------------|-------------|-------------|-------------|
+| light.your_lamp | turn_on | [0-255] | default | default | default | Turn on one or more lights and set brightness. |
+| light.your_lamp | turn_on | [0-255] | "[300,70]" | default | default | Turn on one or more lights and set brightness, hue and saturation. |
+| cover.your_blinds | set_cover_position | default | default | [0-100] | default | Moves a cover to a specific position. |
+| cover.your_blinds | set_cover_tilt_position | default | default | default | [0-100] | Moves a cover tilt to a specific position. |
