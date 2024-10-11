@@ -1,4 +1,6 @@
-# ![Home Assistant to Grenton 2](https://github.com/user-attachments/assets/c788e6b7-4828-4b9c-ba18-3d8d27b12b93)
+<img src="https://github.com/user-attachments/assets/788babbf-315b-4859-94e9-7b7ec33df2cb" alt="grenton_ha" width="300"/>
+
+# Home Assistant to Grenton
 
 Run services and read entities from Home Assistant in the Grenton system.
 
