@@ -4,9 +4,9 @@
 
 Run services and read entities from Home Assistant in the Grenton system.
 
-If you like what I do, buy me a `coffee`!
-
-[![](https://img.shields.io/static/v1?label=Donate&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86)](https://tipply.pl/@jnalepka)
+<a href="https://tipply.pl/@jnalepka">
+    <img src="https://img.shields.io/static/v1?label=Donate&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86" alt="Donate" width="130" height="30">
+</a>
 
 
 ## Home Assistant Long-lived access token
