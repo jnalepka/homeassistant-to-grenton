@@ -15,7 +15,7 @@
 -- ║                                                                                                      ║
 -- ║    Script parameters:                                                                                ║
 -- ║          1.  ha_entity, default: "light.my_lamp", string                                             ║
--- ║          2.  ha_method, default: "select_next", string                                               ║
+-- ║          2.  ha_method, default: "toggle", string                                                    ║
 -- ║          3.  attr_brightness, default: -1, number [0-255]                                            ║
 -- ║          4.  attr_hs_color, default: "-", string "[hue, sat]", "[300, 70]"                           ║
 -- ║          5.  attr_color_temp, default: -1, number [153-500]                                          ║
