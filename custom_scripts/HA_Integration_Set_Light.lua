@@ -38,6 +38,7 @@
 -- ║          -  toggle                                                                                   ║
 -- ║                                                                                                      ║
 -- ║    Examples:                                                                                         ║
+-- ║          - entity="light.lamp1", method="turn_on"                                                    ║
 -- ║          - entity="light.lamp1", method="turn_on", brightness=255                                    ║
 -- ║          - entity="light.lamp1", method="turn_on", brightness=255, hs_color="[300, 70]"              ║
 -- ║          - entity="light.lamp1", method="turn_on", brightness=255, color_temp=450                    ║
