@@ -41,6 +41,7 @@
 -- ║          -  stop_cover_tilt                                                                          ║
 -- ║                                                                                                      ║
 -- ║    Examples:                                                                                         ║
+-- ║          - entity="cover.blind1", method="toggle"                                                    ║
 -- ║          - entity="cover.blind1", method="set_cover_position", position=100                          ║
 -- ║          - entity="cover.blind1", method="set_cover_tilt_position", tilt_position=100                ║
 -- ║                                                                                                      ║
