@@ -218,45 +218,59 @@ In Home Assistant go to the Profile->Security->Long-lived access tokens, and cre
    | climate.your_thermostat | turn_off | Turns climate device off. |
    | climate.your_thermostat | toggle | Toggles climate device, from on to off, or off to on. |
 
-# (Optional) Run the Home Assistant service with attributes
+# (Optional) Use custom script to run the Home Assistant service with attributes
 
-   1. On the Gate HTTP, create a script, named `HA_Integration_Advanced_Set`:
+### For example, we will use a script located in the custom_scripts/HA_Integration_Set_Light.lua folder
+
+   1. On the Gate HTTP, create a script, named `HA_Integration_Set_Light`:
 
       ```lua
-        -- ╔═══════════════════════════════════════════════════════════════════════════════╗
-        -- ║                        Author: Jan Nalepka                                    ║
-        -- ║                                                                               ║
-        -- ║ Script: HA_Integration_Advanced_Set                                           ║
-        -- ║ Description: Send a service command for an entity in Home Assistant.          ║
-        -- ║                                                                               ║
-        -- ║ License: MIT License                                                          ║
-        -- ║ Github: https://github.com/jnalepka/homeassistant-to-grenton                  ║
-        -- ║                                                                               ║
-        -- ║ Version: 1.0.1                                                                ║
-        -- ║                                                                               ║
-        -- ║ Requirements:                                                                 ║
-        -- ║    Gate Http:                                                                 ║
-        -- ║          1.  Gate Http NAME: "GATE_HTTP" <or change it in this script>        ║
-        -- ║                                                                               ║
-        -- ║    Script parameters:                                                         ║
-        -- ║          1.  ha_entity, default: "light.my_lamp", string                      ║
-        -- ║          2.  ha_method, default: "toggle", string                             ║
-        -- ║          3.  attr_brightness, default: -1, number [0-255]                     ║
-        -- ║          4.  attr_hs_color, default: "-", string "[hue, sat]", "[300, 70]"    ║
-        -- ║          5.  attr_position, default: -1, number [0-100]                       ║
-        -- ║          6.  attr_tilt_position, default: -1, number [0-100]                  ║
-        -- ║          7.  attr_percentage, default: -1, number [0-100]                     ║
-        -- ║                                                                               ║
-        -- ║    Http_Request virtual object:                                               ║
-        -- ║          Name: HA_Request_Set                                                 ║
-        -- ║          Host: http://192.168.0.114:8123  (example)                           ║
-        -- ║          Path: /api/state (any value)                                         ║
-        -- ║          Method: "POST"                                                       ║
-        -- ║          RequestType: JSON                                                    ║
-        -- ║          ResponseType: JSON                                                   ║
-        -- ║          RequestHeaders: Authorization: Bearer <your HA token>                ║
-        -- ║                                                                               ║
-        -- ╚═══════════════════════════════════════════════════════════════════════════════╝
+        -- ╔══════════════════════════════════════════════════════════════════════════════════════════════════════╗
+        -- ║                        Author: Jan Nalepka                                                           ║
+        -- ║                                                                                                      ║
+        -- ║ Script: HA_Integration_Set_Light                                                                     ║
+        -- ║ Description: Send a service command for an entity in Home Assistant.                                 ║
+        -- ║                                                                                                      ║
+        -- ║ License: MIT License                                                                                 ║
+        -- ║ Github: https://github.com/jnalepka/homeassistant-to-grenton                                         ║
+        -- ║                                                                                                      ║
+        -- ║ Version: 1.0.0                                                                                       ║
+        -- ║                                                                                                      ║
+        -- ║ Requirements:                                                                                        ║
+        -- ║    Gate Http:                                                                                        ║
+        -- ║          1.  Gate Http NAME: "GATE_HTTP" <or change it in this script>                               ║
+        -- ║                                                                                                      ║
+        -- ║    Script parameters:                                                                                ║
+        -- ║          1.  ha_entity, default: "light.my_lamp", string                                             ║
+        -- ║          2.  ha_method, default: "toggle", string                                                    ║
+        -- ║          3.  attr_brightness, default: -1, number [0-255]                                            ║
+        -- ║          4.  attr_hs_color, default: "-", string "[hue, sat]", "[300, 70]"                           ║
+        -- ║          5.  attr_color_temp, default: -1, number [153-500]                                          ║
+        -- ║                                                                                                      ║
+        -- ║    Http_Request virtual object:                                                                      ║
+        -- ║          Name: HA_Request_Set                                                                        ║
+        -- ║          Host: http://192.168.0.114:8123  (example)                                                  ║
+        -- ║          Path: /api/state (any value)                                                                ║
+        -- ║          Method: "POST"                                                                              ║
+        -- ║          RequestType: JSON                                                                           ║
+        -- ║          ResponseType: JSON                                                                          ║
+        -- ║          RequestHeaders: Authorization: Bearer <your HA token>                                       ║
+        -- ║                                                                                                      ║
+        -- ║    Available methods:                                                                                ║
+        -- ║          -  turn_on                                                                                  ║
+        -- ║          -  turn_on(attr_brightness)                                                                 ║
+        -- ║          -  turn_on(attr_brightness, attr_hs_color)                                                  ║
+        -- ║          -  turn_on(attr_brightness, attr_hs_color)                                                  ║
+        -- ║          -  turn_off                                                                                 ║
+        -- ║          -  toggle                                                                                   ║
+        -- ║                                                                                                      ║
+        -- ║    Examples:                                                                                         ║
+        -- ║          - entity="light.lamp1", method="turn_on"                                                    ║
+        -- ║          - entity="light.lamp1", method="turn_on", brightness=255                                    ║
+        -- ║          - entity="light.lamp1", method="turn_on", brightness=255, hs_color="[300, 70]"              ║
+        -- ║          - entity="light.lamp1", method="turn_on", brightness=255, color_temp=450                    ║
+        -- ║                                                                                                      ║
+        -- ╚══════════════════════════════════════════════════════════════════════════════════════════════════════╝
         
         local ha_service, ha_entity_name = string.match(ha_entity, "([^%.]+)%.([^%.]+)")
         local path = "/api/services/"..ha_service.."/"..ha_method
@@ -270,45 +284,32 @@ In Home Assistant go to the Profile->Security->Long-lived access tokens, and cre
         	reqJson.hs_color = attr_hs_color
         end
         
-        if attr_position ~= -1 then 
-        	reqJson.position = attr_position
-        end
-        
-        if attr_tilt_position ~= -1 then 
-        	reqJson.tilt_position = attr_tilt_position
-        end
-        
-        if attr_percentage ~= -1 then 
-        	reqJson.percentage = attr_percentage
+        if attr_color_temp ~= -1 then 
+        	reqJson.color_temp = attr_color_temp 
         end
         
         GATE_HTTP->HA_Request_Set->SetPath(path)
         GATE_HTTP->HA_Request_Set->SetRequestBody(reqJson)
         GATE_HTTP->HA_Request_Set->SendRequest()
-   
       ```
 
       > Note: If you use a different name for the Gate HTTP or the virtual object, modify it in the script.
 
-2. Add the script parameters to the `HA_Integration_Advanced_Set` script:
+2. Add the script parameters to the `HA_Integration_Set_Light` script:
 
-   ![image](https://github.com/user-attachments/assets/1f40f61a-64b5-4973-be77-098fc6bbd62a)
+   ![image](https://github.com/user-attachments/assets/3e2c6cfc-78a7-4fbe-a50d-8c3e1d2b30b5)
 
    * `Name`: ha_entity `Type`: string
    * `Name`: ha_method `Type`: string
    * `Name`: attr_brightness `Type`: number `Default`: -1  (range: 0-255)
    * `Name`: attr_hs_color `Type`: string `Default`: "-"  (example: "[300,70]", where 300 - hue in range 0-360, 70 is saturation in range 0-100)
-   * `Name`: attr_position `Type`: number `Default`: -1  (range: 0-100)
-   * `Name`: attr_tilt_position `Type`: number `Default`: -1  (range: 0-100)
-   * `Name`: attr_percentage `Type`: number `Default`: -1  (range: 0-100)
+   * `Name`: attr_color_temp `Type`: number `Default`: -1  (range: 153-500), where 153 is cold≈6500K, 500 is warm≈2000K
   
 
-## Advanced Home Assistant services
+## Examples
    
-   | ha_entity    | ha_method  | attr_brightness | attr_hs_color | attr_position | attr_tilt_position | description | description |
-   |-------------|-------------|-------------|-------------|-------------|-------------|-------------|-------------|
-   | light.your_lamp | turn_on | [0-255] | default | default | default | default | Turn on one or more lights and set brightness. |
-   | light.your_lamp | turn_on | [0-255] | "[300,70]" | default | default | default | Turn on one or more lights and set brightness, hue and saturation. |
-   | cover.your_blinds | set_cover_position | default | default | [0-100] | default | default | Moves a cover to a specific position. |
-   | cover.your_blinds | set_cover_tilt_position | default | default | default | [0-100] | default | Moves a cover tilt to a specific position. |
-   | fan.your_fan | set_percentage | default | default | default | default | [0-100] | Changes to a specific percentage. |
+   | ha_entity    | ha_method  | attr_brightness | attr_hs_color | attr_color_temp |  description |
+   |-------------|-------------|-------------|-------------|-------------|-------------|
+   | light.your_lamp | turn_on | [0-255] | default | default | Turn on one or more lights and set brightness. |
+   | light.your_lamp | turn_on | [0-255] | "[300,70]" | default | Turn on one or more lights and set brightness, hue and saturation. |
+   | light.your_lamp | turn_on | [0-255] | default | [153-500] | Turn on one or more lights and set brightness and color temperature. |
