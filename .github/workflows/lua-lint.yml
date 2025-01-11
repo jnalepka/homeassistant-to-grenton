@@ -25,7 +25,7 @@ jobs:
             echo "Processing $file"
             
             # Tworzenie tymczasowego pliku bez linijek z '->'
-            grep -v "->" "$file" > "$file.tmp"
+            grep -v '\->' "$file" > "$file.tmp"
             
             # Sprawdzanie składni w przetworzonym pliku
             if ! luac -p "$file.tmp"; then
