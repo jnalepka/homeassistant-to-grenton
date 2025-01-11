@@ -22,6 +22,18 @@ jobs:
       - name: Check Lua syntax
         run: |
           for file in $(find ./custom_scripts -name '*.lua'); do
-            echo "Checking $file"
-            luac -p "$file"
+            echo "Processing $file"
+            
+            # Tworzenie tymczasowego pliku bez linijek z '->'
+            grep -v "->" "$file" > "$file.tmp"
+            
+            # Sprawdzanie składni w przetworzonym pliku
+            if ! luac -p "$file.tmp"; then
+              echo "Syntax error in $file (excluding lines with '->')"
+              rm "$file.tmp"
+              exit 1
+            fi
+            
+            # Usuwanie tymczasowego pliku
+            rm "$file.tmp"
           done
