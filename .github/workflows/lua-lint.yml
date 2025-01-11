@@ -1,0 +1,27 @@
+name: Check Lua Syntax
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+
+jobs:
+  syntax-check:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Install Lua
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y lua5.4  # Możesz wybrać wersję Lua, której używasz
+
+      - name: Check Lua syntax
+        run: |
+          for file in $(find ./custom_scripts -name '*.lua'); do
+            echo "Checking $file"
+            luac -p "$file"
+          done
