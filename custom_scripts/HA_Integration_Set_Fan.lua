@@ -65,7 +65,7 @@ local reqJson = { entity_id = ha_entity }
 
 if ha_method == "increase_speed" or ha_method == "decrease_speed" then 
 	reqJson.percentage_step = attr_percentage 
-elseif attr_percentage ~= -1 then 
+else if attr_percentage ~= -1 then 
 	reqJson.percentage = attr_percentage 
 end
 
@@ -77,7 +77,7 @@ if attr_direction ~= "-" then
 	reqJson.direction = attr_direction
 end
 
-if attr_oscilating ~= "-" then 
+if attr_oscilating ~= "-" then
 	if attr_oscilating == "true" then 
   	reqJson.oscillating = true
   else
