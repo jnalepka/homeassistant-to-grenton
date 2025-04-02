@@ -8,6 +8,7 @@ Run services and read entities from Home Assistant in the Grenton system.
     <img src="https://img.shields.io/static/v1?label=Donate&message=%E2%9D%A4&logo=GitHub&color=%23fe8e86" alt="Donate" width="130" height="30">
 </a>
 
+<br> Watch the video how to use this integration: https://www.youtube.com/watch?v=7vgE-qqPxfQ
 
 ## Home Assistant Long-lived access token
 
